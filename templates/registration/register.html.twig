@@ -3,7 +3,8 @@
 {% block title %}Créer un compte{% endblock %}
 
 {% block body %}
-<div class:"container containerForm loginForm">
+<div class='container containerForm loginForm'>
+
     <h1>Créer un compte</h1>
 
     {{ form_errors(registrationForm) }}
@@ -15,7 +16,7 @@
         {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control form mt-3', 'placeholder':'Mot de passe' }})}}
         {{ form_widget(registrationForm.agreeTerms) }}
 
-        <button type="submit" class="btn btn-lg btn-primary mt-4">S'enregistrer</button>
+        <button type="submit" class="btn btn-lg btn-primary mt-4">CREER UN COMPTE</button>
     {{ form_end(registrationForm) }}
 </div>
 {% endblock %}
