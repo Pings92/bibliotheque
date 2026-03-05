@@ -1,0 +1,9 @@
+{{ form_start(form) }}
+    {# {{ form_widget(form) }} #}
+    {{ form_row(form.title, {'attr': {'class': 'form form-control'}}) }}
+    {{ form_row(form.author, {'attr': {'class': 'form form-control'}}) }}
+    {{ form_row(form.isbn, {'attr': {'class': 'form form-control'}}) }}
+    {{ form_row(form.stock, {'attr': {'class': 'form form-control'}}) }}
+
+    <button class="btn btn-success">{{ button_label|default('Enregistrer') }}</button>
+{{ form_end(form) }}
