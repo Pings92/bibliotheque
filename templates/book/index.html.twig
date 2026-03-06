@@ -17,6 +17,7 @@
                 <th>Auteur</th>
                 <th>ISBN</th>
                 <th>Stock</th>
+                <th>Résumé</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -28,6 +29,7 @@
                 <td>{{ book.author }}</td>
                 <td>{{ book.isbn }}</td>
                 <td>{{ book.stock }}</td>
+                <td>{{ book.shortdescription |slice(0,60) }} ...</td>
                 <td>
                     <a href="{{ path('app_book_show', {'id': book.id}) }}" class="btn btn-info">Fiche produit</a>
                     <a href="{{ path('app_book_edit', {'id': book.id}) }}" class="btn btn-secondary">Modifier</a>
