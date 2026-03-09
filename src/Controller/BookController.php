@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Book;
 use App\Form\BookType;
+use App\Form\LoaningType;
 use App\Repository\BookRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -121,5 +122,22 @@ final class BookController extends AbstractController
         return $this->redirectToRoute('app_book_index', [], Response::HTTP_SEE_OTHER);
     }
 
+    #[Route('/{id}/borrowing', name: 'app_borrow_a_book')]
+    // Route pour quand on clique sur emprunter
+    
+    // public function borrowing (Request $request, Book $book, EntityManagerInterface $entityManager): Response{
+    //     $form = $this->createForm(LoaningType::class, $book);
+    //     $form->handleRequest($request);
+    //     if ($form->isSubmitted() && $form->isValid()) {
+    //         $entityManager->flush();
+    //         $this->addFlash('success', "Livre emprunté.");
 
+    //     return $this->redirectToRoute('app_catalog', [], Response::HTTP_SEE_OTHER); //
+
+    // }
+    // return $this->render('loaning/show.html.twig', [
+    //     'book' => $book,
+    //     'form' => $form->createView(),
+    // ]);
+    // }
 }
