@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\BookRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+// use Doctrine\Common\Collections\ArrayCollection;
+// use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -35,22 +37,16 @@ class Book
     private ?string $image = null;
 
     /**
-     * @var Collection<int, loaning>
+     * @var Collection<int, Emprunt>
      */
-    #[ORM\OneToMany(targetEntity: loaning::class, mappedBy: 'book')]
-    private Collection $loaning;
-
-    /**
-     * @var Collection<int, Loaning>
-     */
-    #[ORM\OneToMany(targetEntity: Loaning::class, mappedBy: 'book_id')]
-    private Collection $loanings;
+    #[ORM\OneToMany(targetEntity: Emprunt::class, mappedBy: 'book')]
+    private Collection $emprunt;
 
     public function __construct()
     {
-        $this->loaning = new ArrayCollection();
-        $this->loanings = new ArrayCollection();
+        $this->emprunt = new ArrayCollection();
     }
+
 
     public function getId(): ?int
     {
@@ -130,40 +126,32 @@ class Book
     }
 
     /**
-     * @return Collection<int, loaning>
+     * @return Collection<int, Emprunt>
      */
-    public function getLoaning(): Collection
+    public function getEmprunt(): Collection
     {
-        return $this->loaning;
+        return $this->emprunt;
     }
 
-    public function addLoaning(loaning $loaning): static
+    public function addEmprunt(Emprunt $emprunt): static
     {
-        if (!$this->loaning->contains($loaning)) {
-            $this->loaning->add($loaning);
-            $loaning->setBook($this);
+        if (!$this->emprunt->contains($emprunt)) {
+            $this->emprunt->add($emprunt);
+            $emprunt->setBook($this);
         }
 
         return $this;
     }
 
-    public function removeLoaning(loaning $loaning): static
+    public function removeEmprunt(Emprunt $emprunt): static
     {
-        if ($this->loaning->removeElement($loaning)) {
+        if ($this->emprunt->removeElement($emprunt)) {
             // set the owning side to null (unless already changed)
-            if ($loaning->getBook() === $this) {
-                $loaning->setBook(null);
+            if ($emprunt->getBook() === $this) {
+                $emprunt->setBook(null);
             }
         }
 
         return $this;
-    }
-
-    /**
-     * @return Collection<int, Loaning>
-     */
-    public function getLoanings(): Collection
-    {
-        return $this->loanings;
     }
 }
