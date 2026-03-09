@@ -24,6 +24,14 @@ final class BookController extends AbstractController
         ]);
     }
 
+    #[Route('/catalog', name: 'app_catalog', methods: ['GET'])]
+    public function displayCatalog(BookRepository $bookRepository): Response
+    {
+        return $this->render('book/catalog.html.twig', [
+            'books' => $bookRepository->findAll(),
+        ]);
+    }
+
     #[Route('/new', name: 'app_book_new', methods: ['GET', 'POST'])]
     public function new(Request $request, SluggerInterface $slugger, EntityManagerInterface $entityManager): Response
     {
@@ -112,4 +120,6 @@ final class BookController extends AbstractController
 
         return $this->redirectToRoute('app_book_index', [], Response::HTTP_SEE_OTHER);
     }
+
+
 }

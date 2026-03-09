@@ -22,6 +22,18 @@ class Loaning
     #[ORM\Column(length: 180, nullable: true)]
     private ?string $statut = null;
 
+    #[ORM\ManyToOne(inversedBy: 'loaning')]
+    private ?Book $book = null;
+
+    #[ORM\ManyToOne(inversedBy: 'loaning')]
+    private ?User $user = null;
+
+    #[ORM\ManyToOne(inversedBy: 'loanings')]
+    private ?book $book_id = null;
+
+    #[ORM\ManyToOne(inversedBy: 'loanings')]
+    private ?user $user_id = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -59,6 +71,54 @@ class Loaning
     public function setStatut(?string $statut): static
     {
         $this->statut = $statut;
+
+        return $this;
+    }
+
+    public function getBook(): ?Book
+    {
+        return $this->book;
+    }
+
+    public function setBook(?Book $book): static
+    {
+        $this->book = $book;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    public function getBookId(): ?book
+    {
+        return $this->book_id;
+    }
+
+    public function setBookId(?book $book_id): static
+    {
+        $this->book_id = $book_id;
+
+        return $this;
+    }
+
+    public function getUserId(): ?user
+    {
+        return $this->user_id;
+    }
+
+    public function setUserId(?user $user_id): static
+    {
+        $this->user_id = $user_id;
 
         return $this;
     }

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\BookRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -31,6 +33,24 @@ class Book
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $image = null;
+
+    /**
+     * @var Collection<int, loaning>
+     */
+    #[ORM\OneToMany(targetEntity: loaning::class, mappedBy: 'book')]
+    private Collection $loaning;
+
+    /**
+     * @var Collection<int, Loaning>
+     */
+    #[ORM\OneToMany(targetEntity: Loaning::class, mappedBy: 'book_id')]
+    private Collection $loanings;
+
+    public function __construct()
+    {
+        $this->loaning = new ArrayCollection();
+        $this->loanings = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -107,5 +127,43 @@ class Book
         $this->image = $image;
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, loaning>
+     */
+    public function getLoaning(): Collection
+    {
+        return $this->loaning;
+    }
+
+    public function addLoaning(loaning $loaning): static
+    {
+        if (!$this->loaning->contains($loaning)) {
+            $this->loaning->add($loaning);
+            $loaning->setBook($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLoaning(loaning $loaning): static
+    {
+        if ($this->loaning->removeElement($loaning)) {
+            // set the owning side to null (unless already changed)
+            if ($loaning->getBook() === $this) {
+                $loaning->setBook(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Loaning>
+     */
+    public function getLoanings(): Collection
+    {
+        return $this->loanings;
     }
 }

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -38,6 +40,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 15, nullable: true)]
     private ?string $phone_number = null;
+
+    /**
+     * @var Collection<int, loaning>
+     */
+    #[ORM\OneToMany(targetEntity: loaning::class, mappedBy: 'user')]
+    private Collection $loaning;
+
+    /**
+     * @var Collection<int, Loaning>
+     */
+    #[ORM\OneToMany(targetEntity: Loaning::class, mappedBy: 'user_id')]
+    private Collection $loanings;
+
+    public function __construct()
+    {
+        $this->loaning = new ArrayCollection();
+        $this->loanings = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -136,5 +156,43 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->phone_number = $phone_number;
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, loaning>
+     */
+    public function getLoaning(): Collection
+    {
+        return $this->loaning;
+    }
+
+    public function addLoaning(loaning $loaning): static
+    {
+        if (!$this->loaning->contains($loaning)) {
+            $this->loaning->add($loaning);
+            $loaning->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLoaning(loaning $loaning): static
+    {
+        if ($this->loaning->removeElement($loaning)) {
+            // set the owning side to null (unless already changed)
+            if ($loaning->getUser() === $this) {
+                $loaning->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Loaning>
+     */
+    public function getLoanings(): Collection
+    {
+        return $this->loanings;
     }
 }

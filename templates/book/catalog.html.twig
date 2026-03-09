@@ -7,12 +7,12 @@
     
     {% include 'layouts/_flash_message.html.twig' %}
 
-    <h1>Inventaire</h1>
+    <h1>📚 Catalogue des Livres</h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
+                {# <th>Id</th> #}
                 <th>Titre</th>
                 <th>Auteur</th>
                 <th>ISBN</th>
@@ -24,21 +24,25 @@
         <tbody>
         {% for book in books %}
             <tr>
-                <td>{{ book.id }}</td>
+                {# <td>{{ book.id }}</td> #}
                 <td>{{ book.title }}</td>
                 <td>{{ book.author }}</td>
-                <td>{{ book.isbn }}</td>
+                <td >{{ book.isbn }}</td>
                 {% if book.stock == 0 %}
                     <td><span class="badge bg-danger" role="badge">Indisponible</span></td>
                 {% else %}
                     <td class="text-success">{{ book.stock }}</td>
                 {% endif %}
                 <td>{{ book.shortdescription |slice(0,60) }} ...</td>
+                {% if book.stock == 0 %}
+                    <td> <span class="btn btn-secondary">Emprunter</span></td>
+                {% else %}
                 <td>
-                    <a href="{{ path('app_book_show', {'id': book.id}) }}" class="btn btn-info">Fiche produit</a>
-                    <a href="{{ path('app_book_edit', {'id': book.id}) }}" class="btn btn-secondary">Modifier</a>
-                    <a href="{{ path('app_book_delete', {'id': book.id}) }}" class="btn btn-danger">Supprimer</a>
+                    <a href="{{ path('app_book_show', {'id': book.id}) }}" class="btn btn-info">Emprunter</a>
+                    {# <a href="{{ path('app_book_edit', {'id': book.id}) }}" class="btn btn-secondary">Modifier</a>
+                    <a href="{{ path('app_book_delete', {'id': book.id}) }}" class="btn btn-danger">Supprimer</a> #}
                 </td>
+                {% endif %}
             </tr>
         {% else %}
             <tr>
@@ -47,7 +51,5 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('app_book_new') }}" class="btn btn-secondary">Ajouter un ouvrage</a>
     </div>
 {% endblock %}
