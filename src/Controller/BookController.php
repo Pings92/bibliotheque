@@ -25,7 +25,7 @@ final class BookController extends AbstractController
     }
 
     #[Route('/new', name: 'app_book_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, Book $book, SluggerInterface $slugger, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, SluggerInterface $slugger, EntityManagerInterface $entityManager): Response
     {
         $book = new Book();
         $form = $this->createForm(BookType::class, $book);

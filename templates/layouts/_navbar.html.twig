@@ -1,20 +1,24 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Navbar</a>
+    <a class="navbar-brand" href="#">📚 YACHAI TAQI</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
+          <a class="nav-link active" aria-current="page" href="#">Accueil</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Catalogue</a>
         </li>
-        {# <li class="nav-item">
-          <a class="nav-link" href="#">Pricing</a>
-        </li> #}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Emprunter</a>
+          <ul class="dropdown-menu">
+            <li>Je ne sais quoi</li>
+            <li>Mes emprunts en cours</li>
+          </ul>
+        </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Administration
@@ -24,12 +28,15 @@
             <li><a class="dropdown-item" href="{{ path('app_book_new') }}">Ajouter un ouvrage</a></li>
             <li><hr class="dropdown-divider"></li>            
             <li><a class="dropdown-item" href="#">Emprunt en cours</a></li>
-            <li><a class="dropdown-item" href="#">Nouvel emprunt???</a></li>
+            <li><a class="dropdown-item" href="#">Historique des emprunts</a></li>
             <li><hr class="dropdown-divider"></li>            
             <li><a class="dropdown-item" href="#">A voir</a></li>
             <li><a class="dropdown-item" href="#">A voir</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="{{ path('app_user_index')}}">BDD User</a></li>
+            {% if is_granted("ROLE_ADMIN") %}
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="{{ path('app_user_index')}}">BDD User</a></li>
+            {% endif %}
+
           </ul>
         </li>
       </ul>
