@@ -8,9 +8,10 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>DateEmprunt</th>
-                <th>DateRetour</th>
+                {# <th>Id</th> #}
+                <th>Nom du livre</th>
+                <th>Date emprunt</th>
+                <th>Date retour</th>
                 <th>Statut</th>
                 <th>actions</th>
             </tr>
@@ -18,13 +19,18 @@
         <tbody>
         {% for emprunt in emprunts %}
             <tr>
-                <td>{{ emprunt.id }}</td>
+                {# <td>{{ emprunt.id }}</td> #}
+                <td>{{ emprunt.book.title }}</td>
                 <td>{{ emprunt.dateEmprunt ? emprunt.dateEmprunt|date('Y-m-d') : '' }}</td>
                 <td>{{ emprunt.dateRetour ? emprunt.dateRetour|date('Y-m-d') : '' }}</td>
                 <td>{{ emprunt.statut }}</td>
                 <td>
-                    <a href="{{ path('app_emprunt_show', {'id': emprunt.id}) }}">show</a>
-                    <a href="{{ path('app_emprunt_edit', {'id': emprunt.id}) }}">edit</a>
+                    {% if emprunt.statut == "en cours" %}
+                        <a href="{{path('app_emprunt_return', {'id': emprunt.id}) }}" class="btn btn-primary">Restituer</a>
+                    {# <a href="{{ path('app_emprunt_show', {'id': emprunt.id}) }}">Restituer</a> #}
+                    {% else %}
+                        <p><span class="badge bdg-succes">Restitué</span></p>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}
@@ -35,5 +41,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_emprunt_new') }}">Create new</a>
+    {# <a href="{{ path('app_emprunt_new') }}">Create new</a> #}
 {% endblock %}

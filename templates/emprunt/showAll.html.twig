@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Emprunt{% endblock %}
+
+{% block body %}
+    <div class='container'>
+    <h1>Historique de tous les emprunts</h1>
+
+    <table class="table">
+        <tbody>
+        <tr>
+            <th>Client</th>
+            <th>Livre</th>
+            <th>Date d'emprunt</th>
+            <th>Date de retour</th>
+            <th>Statut</th>
+        </tr>
+            {% for emprunt in tousLesEmprunts %}
+            <tr>
+                {# <td>{{ emprunt.user.name}}</td> #}
+                <td>{{ emprunt.book.title}}</td>
+                <td>{{ emprunt.dateEmprunt|date('Y-m-d') }}</td>
+                
+                {% if emprunt.dateRetour == null %}
+                    <td>Emprunt en cours</td>
+                {% else %}
+                    <td>{{ emprunt.dateRetour|date('Y-m-d')  }}</td>
+                {% endif %}
+                <td>{{ emprunt.statut}}</td>
+            </tr>
+            {% endfor %}
+            <tr>
+                {# <td><a href="{{ path('app_emprunt_new', {'id': emprunt.id}) }}" class="btn btn-primary">Emprunter</a></td> #}
+            </tr>
+        </tbody>
+        
+    </table>
+    
+</div>
+    {# <a href="{{ path('app_emprunt_index') }}">back to list</a> #}
+
+    {# <a href="{{ path('app_emprunt_edit', {'id': emprunt.id}) }}">edit</a> #}
+
+    {# {{ include('emprunt/_delete_form.html.twig') }} #}
+{% endblock %}

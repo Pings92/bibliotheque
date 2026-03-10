@@ -26,10 +26,10 @@ class EmpruntType extends AbstractType
                 'class' => Book::class,
                 'choice_label' => 'title',
             ])
-            ->add('user', EntityType::class, [
-                'class' => User::class,
-                'choice_label' => 'name',
-            ])
+            // ->add('user', EntityType::class, [
+            //     'class' => User::class,
+            //     'choice_label' => 'name',
+            // ])
         ;
     }
 

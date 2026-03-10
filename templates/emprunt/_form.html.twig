@@ -4,21 +4,3 @@
     <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }} 
 
-
- {#{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <label for""> Date </label>
-    {{ form_widget(form.title, {'attr': {'class': 'form form-control'}}) }}
-    <label for""> Auteur </label>
-    {{ form_widget(form.author, {'attr': {'class': 'form form-control'}}) }}
-    <label for""> ISBN </label>
-    {{ form_widget(form.isbn, {'attr': {'class': 'form form-control'}}) }}
-    <label for""> Stock </label>
-    {{ form_widget(form.stock, {'attr': {'class': 'form form-control'}}) }}
-    <label for""> Synospis </label>
-    {{ form_widget(form.short_description, {'attr': {'class': 'form form-control' }})}}
-    <label for""> Image </label>
-    {{ form_row(form.image, {'attr': {'class': 'form-control' }})}}
-
-    <button class="btn btn-success">{{ button_label|default('Enregistrer') }}</button>
-{{ form_end(form) }} #}

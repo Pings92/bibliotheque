@@ -3,32 +3,48 @@
 {% block title %}Emprunt{% endblock %}
 
 {% block body %}
+    <div class='container'>
     <h1>Emprunt</h1>
 
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ emprunt.id }}</td>
+                <th></th>
+                <td><img src="{{ asset('uploads/images/'~book.image)}}" class="card-img-top miniatures" alt="..."></td>
             </tr>
             <tr>
-                <th>DateEmprunt</th>
-                <td>{{ emprunt.dateEmprunt ? emprunt.dateEmprunt|date('Y-m-d') : '' }}</td>
+                <th>Titre</th>
+                <td>{{ book.title }}</td>
             </tr>
             <tr>
-                <th>DateRetour</th>
-                <td>{{ emprunt.dateRetour ? emprunt.dateRetour|date('Y-m-d') : '' }}</td>
+                <th>Auteur</th>
+                <td>{{ book.author }}</td>
             </tr>
             <tr>
-                <th>Statut</th>
-                <td>{{ emprunt.statut }}</td>
+                <th>Résumé</th>
+                <td>{{ book.shortdescription }}</td>
+            </tr>
+            <tr>
+                <th>stock</th>
+                <td>{{ book.stock }}</td>
+            </tr>
+
+            <tr>
+                <td></td>
+                {% if book.stock<= 0 %}
+                <td><a href="#" class="btn btn-danger">Indisponible</a></td>
+                {% else %}
+                <td><a href="{{ path('app_emprunt_new', {'id': book.id}) }}" class="btn btn-primary">Emprunter</a></td>
+                {% endif %}
             </tr>
         </tbody>
+        
     </table>
+    
+</div>
+    {# <a href="{{ path('app_emprunt_index') }}">back to list</a> #}
 
-    <a href="{{ path('app_emprunt_index') }}">back to list</a>
+    {# <a href="{{ path('app_emprunt_edit', {'id': emprunt.id}) }}">edit</a> #}
 
-    <a href="{{ path('app_emprunt_edit', {'id': emprunt.id}) }}">edit</a>
-
-    {{ include('emprunt/_delete_form.html.twig') }}
+    {# {{ include('emprunt/_delete_form.html.twig') }} #}
 {% endblock %}

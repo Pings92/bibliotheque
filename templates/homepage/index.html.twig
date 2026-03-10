@@ -18,7 +18,7 @@
         <div class="card-body">
             <h5 class="card-title">{{ book.title}}</h5>
             <p class="card-text"> {{ book.shortdescription|slice(0,60)}} ...</p>
-            <a href="{{ path('app_emprunt_new', {'id': book.id}) }}" class="btn btn-primary">Consulter</a>
+            <a href="{{ path('app_emprunt_show', {'id': book.id}) }}" class="btn btn-primary">Consulter</a>
         </div>
         </div>
     {% endfor %}

@@ -38,7 +38,7 @@
                     <td> <span class="btn btn-secondary">Emprunter</span></td>
                 {% else %}
                 <td>
-                    <a href="{{ path('app_book_show', {'id': book.id}) }}" class="btn btn-info">Emprunter</a>                    
+                    <a href="{{ path('app_emprunt_new', {'id': book.id}) }}" class="btn btn-info">Emprunter</a>                    
                     {# <a href="{{ path('app_book_edit', {'id': book.id}) }}" class="btn btn-secondary">Modifier</a>
                     <a href="{{ path('app_book_delete', {'id': book.id}) }}" class="btn btn-danger">Supprimer</a> #}
                 </td>
