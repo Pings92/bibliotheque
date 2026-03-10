@@ -4,7 +4,7 @@
 
 {% block body %}
     <h1>Emprunt index</h1>
-
+c'est la page de rendu des emprunts effectué par un client index html twig
     <table class="table">
         <thead>
             <tr>
@@ -17,27 +17,37 @@
             </tr>
         </thead>
         <tbody>
-        {% for emprunt in emprunts %}
-            <tr>
-                {# <td>{{ emprunt.id }}</td> #}
-                <td>{{ emprunt.book.title }}</td>
-                <td>{{ emprunt.dateEmprunt ? emprunt.dateEmprunt|date('Y-m-d') : '' }}</td>
-                <td>{{ emprunt.dateRetour ? emprunt.dateRetour|date('Y-m-d') : '' }}</td>
-                <td>{{ emprunt.statut }}</td>
-                <td>
-                    {% if emprunt.statut == "en cours" %}
-                        <a href="{{path('app_emprunt_return', {'id': emprunt.id}) }}" class="btn btn-primary">Restituer</a>
-                    {# <a href="{{ path('app_emprunt_show', {'id': emprunt.id}) }}">Restituer</a> #}
-                    {% else %}
-                        <p><span class="badge bdg-succes">Restitué</span></p>
-                    {% endif %}
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
+        {# {% for user in users %} #}
+            {% for emprunt in emprunts %}
+                <tr>
+                    {# <td>{{ emprunt.id }}</td> #}
+                    {# <td>en attendant de trouver comment afficher le nom du client</td> #}
+                    <td>{{ emprunt.book.title }}</td>
+                    <td>{{ emprunt.dateEmprunt ? emprunt.dateEmprunt|date('Y-m-d') : '' }}</td>
+                    <td>{{ emprunt.dateRetour ? emprunt.dateRetour|date('Y-m-d') : '' }}</td>
+                    <td>
+                        {% if emprunt.statut == "en cours" %}
+                            <p class="badge bg-warning">En cours</p>
+                        {% elseif emprunt.statut == "Restitué"%}
+                            <p class="badge bg-danger">Terminé</p>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if emprunt.statut == "en cours" %}
+                            <a href="{{path('app_emprunt_return', {'id': emprunt.id}) }}" class="btn btn-primary">Restituer</a>
+                            <a href="{{path('app_book_show', {'id': emprunt.book.id}) }}" class="btn btn-info">Détails</a>
+                        {# <a href="{{ path('app_emprunt_show', {'id': emprunt.id}) }}">Restituer</a> #}
+                        {% else %}
+                            <p class="badge bg-success">Rendu</p>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5">no records found</td>
+                </tr>
+            {% endfor %}
+        {# {% endfor %} #}
         </tbody>
     </table>
 

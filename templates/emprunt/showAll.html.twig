@@ -5,7 +5,8 @@
 {% block body %}
     <div class='container'>
     <h1>Historique de tous les emprunts</h1>
-
+C'est la page qui montre tous les emprunts effectuer sur le site showall html twig
+on doit afficher le nom du client 
     <table class="table">
         <tbody>
         <tr>
@@ -17,7 +18,7 @@
         </tr>
             {% for emprunt in tousLesEmprunts %}
             <tr>
-                {# <td>{{ emprunt.user.name}}</td> #}
+                <td>{{ emprunt.user.name}}</td>
                 <td>{{ emprunt.book.title}}</td>
                 <td>{{ emprunt.dateEmprunt|date('Y-m-d') }}</td>
                 

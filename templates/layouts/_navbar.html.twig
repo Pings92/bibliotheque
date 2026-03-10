@@ -11,15 +11,31 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{{ path('app_catalog')}}">Catalogue</a>
+
         {# </li> #}
         {# <li class="nav-item dropdown"> #}
           {# <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Emprunter</a> #}
           {# <ul class="dropdown-menu"> #}
             {# <li>Je ne sais quoi</li> #}
+
         <li class="nav-item">
           <a class="nav-link" href="{{ path('app_emprunt_index') }}">Mes emprunts en cours</a>
+
           {# </ul> #}
         {# </li> #}
+
+        <li class="nav-item dropdown">
+          <a href="" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Compte
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{{ path('app_login')}}">Se connecter</a></li>
+            <li><a class="dropdown-item" href="{{ path('app_register')}}">Creer un compte</a></li>
+            <li>Mes infos</li>
+            <li><a class="dropdown-item" href="{{ path('app_logout')}}">Me deconnecter</a></li>
+          </ul>
+        </li>
+        {% if is_granted("ROLE_ADMIN") %}
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Administration
@@ -28,12 +44,11 @@
             <li><a class="dropdown-item" href="{{ path('app_book_index') }}">Liste des ouvrages</a></li>
             <li><a class="dropdown-item" href="{{ path('app_book_new') }}">Ajouter un ouvrage</a></li>
             <li><hr class="dropdown-divider"></li>            
-            <li><a class="dropdown-item" href="#">Emprunt en cours</a></li>
-            <li><a class="dropdown-item" href="{{ path('app_emprunt_all') }}">Historique des emprunts</a></li>
+            {# <li><a class="dropdown-item" href="#">Emprunt en cours</a></li> #}
+            <li><a class="dropdown-item" href="{{ path('app_emprunt_all') }}">Historique de tous les emprunts</a></li>
             {# <li><hr class="dropdown-divider"></li>             #}
             {# <li><a class="dropdown-item" href="#">A voir</a></li>
             <li><a class="dropdown-item" href="#">A voir</a></li> #}
-            {% if is_granted("ROLE_ADMIN") %}
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="{{ path('app_user_index')}}">BDD User</a></li>
             {% endif %}
