@@ -4,9 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Book;
 use App\Entity\Emprunt;
-// use App\Form\BookType;
+use App\Entity\User;
 use App\Repository\BookRepository;
-use App\Form\EmpruntType;
+// use App\Form\EmpruntType;
 use App\Repository\EmpruntRepository;
 use App\Repository\UserRepository;
 use DateTimeImmutable;
@@ -19,12 +19,15 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/emprunt')]
 final class EmpruntController extends AbstractController
 {
-// chemin qui montre tous les emprunts en cours
+// chemin qui montre tous les emprunts en cours pour le clint connecté
     #[Route(name: 'app_emprunt_index', methods: ['GET'])]
-    public function index(EmpruntRepository $empruntRepository): Response
+    public function empruntClient(EmpruntRepository $empruntRepository): Response
     {
+        $user = $this->getUser();
+        $clientEmprunts = $empruntRepository->findBy(['user' => $user]);
+
         return $this->render('emprunt/index.html.twig', [
-            'emprunts' => $empruntRepository->findAll(),
+            'emprunts' => $clientEmprunts,
         ]);
     }
 // Chemin pour faire un nouvel emprunt à l'appuie du bouton FONCTIONNE
@@ -50,60 +53,21 @@ final class EmpruntController extends AbstractController
     }
 // Chemin pour faire un retour d'un livre à l'appuie du bouton restituer
     #[Route('/{id}/returnBook', name: 'app_emprunt_return', methods: ['GET', 'POST'])]
-    public function returnBook($id, Request $request, BookRepository $bookRepository, Emprunt $emprunt, EntityManagerInterface $entityManager, Book $book): Response
+    public function returnBook(Emprunt $emprunt, EntityManagerInterface $entityManager): Response
     {
-        $emprunt-> setBook($book);
-        $emprunt->setUser($this->getUser());
-        $book = $bookRepository -> find($id);
-
         $emprunt->setDateRetour(new DateTimeImmutable());
         $emprunt->setStatut("Restitué");
 
         $book = $emprunt->getBook();
         $book->setStock($book->getStock() + 1);
-        // $currentStock = $book->getStock() + 1;
-        // $book->setStock($currentStock);
 
-        // $entityManager->persist($emprunt);
         $entityManager->flush();
 
         $this->addFlash('success', "Livre rendu.");
 
         // retourne sur la liste des emprunts en cours
         return $this->redirectToRoute('app_emprunt_index', [], Response::HTTP_SEE_OTHER);
-
-        
     }
-
-// Code Gemini
-// #[Route('/{id}/return', name: 'app_emprunt_return', methods: ['GET', 'POST'])]
-// public function returnBook(
-//     Emprunt $emprunt, // Symfony récupère automatiquement l'emprunt via l'ID
-//     EntityManagerInterface $entityManager
-// ): Response {
-//     // 1. On vérifie si le livre n'a pas déjà été rendu pour éviter les doublons de stock
-
-
-//     // 2. Mise à jour de l'emprunt (pas de "new Emprunt")
-//     $emprunt->setDateRetour(new \DateTimeImmutable());
-//     $emprunt->setStatut("Restitué");
-
-//     // 3. Mise à jour du stock du livre associé
-//     $book = $emprunt->getBook();
-//     $book->setStock($book->getStock() + 1);
-
-//     // 4. On enregistre les modifications
-//     // Pas besoin de persist($emprunt) car l'objet vient déjà de la BDD
-//     $entityManager->flush();
-
-//     $this->addFlash('success', "Le livre a bien été restitué.");
-
-//     return $this->redirectToRoute('app_emprunt_index', [], Response::HTTP_SEE_OTHER);
-// }
-
-
-
-
 
     #[Route('/{id}/emprunt/history', name: 'app_emprunt_show', methods: ['GET', 'POST"'])]
     public function show($id, BookRepository $bookRepository, EmpruntRepository $empruntRepo): Response
@@ -116,6 +80,7 @@ final class EmpruntController extends AbstractController
             'book'=> $book
         ]);
     }   
+    
     // C'est la route qui montre l'historique de tous les emprunts
     #[Route('/emprunt/all/', name: 'app_emprunt_all', methods: ['GET', 'POST"'])]
     public function showAll(UserRepository $userRepository, EmpruntRepository $empruntRepo, BookRepository $bookRepository): Response
@@ -125,13 +90,13 @@ final class EmpruntController extends AbstractController
         $book = $bookRepository -> findAll();
         $user = $userRepository -> findAll();
 
-
         return $this->render('emprunt/showAll.html.twig', [
             'tousLesEmprunts' => $allEmprunt,
             'book' => $book,
             'user' =>$user,
         ]);
     }
+
 
 
 }

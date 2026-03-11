@@ -8,21 +8,35 @@
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
 
-<div class="example-wrapper">
+{# <div class="example-wrapper">
     <h1>Bienvenue chez YACHAI TAQI</h1>
-</div>
-<div class="row">
-    {% for book in books %}
-        <div class="card" style="width: 18rem;">
-        <img src="{{ asset('uploads/images/'~book.image)}}" class="card-img-top miniatures" alt="...">
-        <div class="card-body">
-            <h5 class="card-title">{{ book.title}}</h5>
-            <p class="card-text"> {{ book.shortdescription|slice(0,60)}} ...</p>
-            <a href="{{ path('app_emprunt_show', {'id': book.id}) }}" class="btn btn-primary">Consulter</a>
+</div> #}
+<div class="card-group">
+    <div class='container'>
+        <div class="row">
+            {% for book in books %}
+                <div class="card" style="width: 20rem;">
+                <img src="{{ asset('uploads/images/'~book.image)}}" class="card-img-top miniatures" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">{{ book.title}}</h5>
+                    <p class="card-text"> {{ book.shortdescription|slice(0,60)}} ...</p>
+                    <a href="{{ path('app_emprunt_show', {'id': book.id}) }}" class="btn btn-primary">Consulter</a>
+                </div>
+                {% if book.stock == 0 %}
+                    <div class="card-footer">
+                        <small class="badge bg-danger">Victime de son succès</small>
+                    </div>
+                {% else %}
+                    <div class="card-footer">
+                        <small class="badge bg-success">en stock</small>
+                    </div>
+                {% endif %}
+
+                </div>
+            {% endfor %}
         </div>
-        </div>
-    {% endfor %}
-</div>
+    </div>  
+</div>  
 <ul>
 
 {% endblock %}

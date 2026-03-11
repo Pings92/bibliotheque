@@ -1,13 +1,38 @@
-body {
-    /* background-color: #4B371C; */
-/* background-image: radial-gradient(circle, #9a7b4f, #846440, #6f4e31, #593923, #432616); */
+/* body {
+    background-color: #4B371C;
+background-image: radial-gradient(circle, #9a7b4f, #846440, #6f4e31, #593923, #432616);
 background-image: radial-gradient(circle, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1);
 }
-/* .navbar{
+.navbar{
 background-image: radial-gradient(circle, #9a7b4f, #846440, #6f4e31, #593923, #432616);
-} */
+}  */
  .miniatures{
     margin-top: 5px;
-    max-width: 309.8px;
-    height: 304px;
+    max-width: 300px;
+    height: 450px;
  }
+
+ body {
+    background-color: #F5EBE0; /* Le fond beige doux */
+    color: #2D3142;           /* Texte anthracite */
+    font-family: 'Georgia', serif; /* Une police avec empattements pour le côté livre */
+}
+
+.navbar {
+    background-color: #1B263B; /* Navbar sombre */
+    color: white;
+    padding: 1rem;
+}
+
+.container {
+    margin-top: 10px;
+    background-color: #FFFFFF;
+    border-radius: 8px;       /* Des coins arrondis pour la douceur */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05); /* Ombre légère pour le relief */
+    padding: 20px;
+    margin-bottom: 20px;
+}
+.card{
+    margin: 10px;
+    align-items:center;
+}

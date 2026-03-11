@@ -5,6 +5,7 @@
 {% block body %}
     <h1>Emprunt index</h1>
 c'est la page de rendu des emprunts effectué par un client index html twig
+<div class='container'>
     <table class="table">
         <thead>
             <tr>
@@ -23,8 +24,8 @@ c'est la page de rendu des emprunts effectué par un client index html twig
                     {# <td>{{ emprunt.id }}</td> #}
                     {# <td>en attendant de trouver comment afficher le nom du client</td> #}
                     <td>{{ emprunt.book.title }}</td>
-                    <td>{{ emprunt.dateEmprunt ? emprunt.dateEmprunt|date('Y-m-d') : '' }}</td>
-                    <td>{{ emprunt.dateRetour ? emprunt.dateRetour|date('Y-m-d') : '' }}</td>
+                    <td>{{ emprunt.dateEmprunt ? emprunt.dateEmprunt|date('d-m-Y H:i:s', "Europe/Paris") : '' }}</td>
+                    <td>{{ emprunt.dateRetour ? emprunt.dateRetour|date('d-m-Y H:i:s', "Europe/Paris") : '' }}</td>
                     <td>
                         {% if emprunt.statut == "en cours" %}
                             <p class="badge bg-warning">En cours</p>
@@ -44,12 +45,12 @@ c'est la page de rendu des emprunts effectué par un client index html twig
                 </tr>
             {% else %}
                 <tr>
-                    <td colspan="5">no records found</td>
+                    <td colspan="5">Aucun emprunt en cours pour le moment.</td>
                 </tr>
             {% endfor %}
         {# {% endfor %} #}
         </tbody>
     </table>
-
+</div>
     {# <a href="{{ path('app_emprunt_new') }}">Create new</a> #}
 {% endblock %}
