@@ -32,8 +32,21 @@ final class EmpruntController extends AbstractController
     }
 // Chemin pour faire un nouvel emprunt à l'appuie du bouton FONCTIONNE
     #[Route('/{id}/new', name: 'app_emprunt_new', methods: ['GET', 'POST'])]
-    public function new($id, Request $request, BookRepository $bookRepository, EntityManagerInterface $entityManager, Book $book): Response
+    public function new($id, EmpruntRepository $empruntRepository, Request $request, BookRepository $bookRepository, EntityManagerInterface $entityManager, Book $book): Response
     {
+        $user = $this->getUser();
+        if (!$user) {
+        $this->addFlash('danger', "Vous devez être connecté pour emprunter un livre.");
+        return $this->redirectToRoute('app_login');
+    }
+        $nbEmpruntsEnCours = $empruntRepository->count([
+        'user' => $user,
+        'dateRetour' => null
+    ]);
+        if ($nbEmpruntsEnCours >= 3) {
+        $this->addFlash('danger', "Vous avez déjà 3 livres en cours d'emprunt. Veuilez restituer un livre avant de pouvoir effectuer un nouvel emprunt!");
+        return $this->redirectToRoute('app_emprunt_index');
+    }
         $emprunt = new Emprunt();
         $emprunt-> setBook($book);
         $emprunt-> setUser($this->getUser());
@@ -48,8 +61,10 @@ final class EmpruntController extends AbstractController
         $entityManager->flush();
 
         $this->addFlash('success', "Livre emprunté.");
-
+        // if ($nbEmpruntsEnCours >=3){
         return $this->redirectToRoute('app_emprunt_index', [], Response::HTTP_SEE_OTHER);
+        // }
+        // return $this->redirectToRoute('app_emprunt_new', [], Response::HTTP_SEE_OTHER);
     }
 // Chemin pour faire un retour d'un livre à l'appuie du bouton restituer
     #[Route('/{id}/returnBook', name: 'app_emprunt_return', methods: ['GET', 'POST'])]
@@ -80,7 +95,7 @@ final class EmpruntController extends AbstractController
             'book'=> $book
         ]);
     }   
-    
+
     // C'est la route qui montre l'historique de tous les emprunts
     #[Route('/emprunt/all/', name: 'app_emprunt_all', methods: ['GET', 'POST"'])]
     public function showAll(UserRepository $userRepository, EmpruntRepository $empruntRepo, BookRepository $bookRepository): Response
@@ -96,7 +111,4 @@ final class EmpruntController extends AbstractController
             'user' =>$user,
         ]);
     }
-
-
-
 }

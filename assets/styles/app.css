@@ -18,12 +18,6 @@ background-image: radial-gradient(circle, #9a7b4f, #846440, #6f4e31, #593923, #4
     font-family: 'Georgia', serif; /* Une police avec empattements pour le côté livre */
 }
 
-.navbar {
-    background-color: #1B263B; /* Navbar sombre */
-    color: white;
-    padding: 1rem;
-}
-
 .container {
     margin-top: 10px;
     background-color: #FFFFFF;
@@ -35,4 +29,39 @@ background-image: radial-gradient(circle, #9a7b4f, #846440, #6f4e31, #593923, #4
 .card{
     margin: 10px;
     align-items:center;
+}
+
+/* test nav bar customisé */
+.custom-navbar {
+    background-color: #1B263B !important; /* Ton Bleu Marine */
+    border-bottom: 3px solid #84A59D;      /* Rappel Vert Sauge */
+}
+
+/* Le titre de la bibliothèque */
+.navbar-brand {
+    font-family: 'Georgia', serif;
+    font-weight: bold;
+    color: #FFFFFF !important;
+}
+
+/* Les liens du menu */
+.custom-navbar .nav-link {
+    color: #F5EBE0 !important; /* Ton Beige Papier */
+    transition: 0.3s;
+}
+
+/* Au survol des liens */
+.custom-navbar .nav-link:hover {
+    color: #84A59D !important; /* Devient Vert Sauge au survol */
+}
+
+/* Correction pour le menu déroulant (dropdown) */
+.dropdown-menu {
+    background-color: #FFFFFF;
+    border: 1px solid #1B263B;
+}
+
+.dropdown-item:hover {
+    background-color: #F5EBE0;
+    color: #1B263B;
 }

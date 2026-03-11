@@ -27,7 +27,11 @@ on doit afficher le nom du client
                 {% else %}
                     <td>{{ emprunt.dateRetour|date('Y-m-d')  }}</td>
                 {% endif %}
-                <td>{{ emprunt.statut}}</td>
+                {% if emprunt.statut == "en cours" %}
+                    <td class="badge bg-warning">{{ emprunt.statut}}</td>
+                {% elseif emprunt.statut == "Restitué"  %}
+                    <td class="badge bg-success">{{ emprunt.statut}}</td>
+                {% endif %}
             </tr>
             {% endfor %}
             <tr>
