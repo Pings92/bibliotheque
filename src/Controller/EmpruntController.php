@@ -61,11 +61,13 @@ final class EmpruntController extends AbstractController
         $entityManager->flush();
 
         $this->addFlash('success', "Livre emprunté.");
-        // if ($nbEmpruntsEnCours >=3){
-        return $this->redirectToRoute('app_emprunt_index', [], Response::HTTP_SEE_OTHER);
-        // }
-        // return $this->redirectToRoute('app_emprunt_new', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_catalog', [
+            'empruntEnCours'=> $nbEmpruntsEnCours,
+            'emprunt'=> $emprunt,
+
+        ], Response::HTTP_SEE_OTHER);
     }
+
 // Chemin pour faire un retour d'un livre à l'appuie du bouton restituer
     #[Route('/{id}/returnBook', name: 'app_emprunt_return', methods: ['GET', 'POST'])]
     public function returnBook(Emprunt $emprunt, EntityManagerInterface $entityManager): Response

@@ -15,10 +15,14 @@
                 {# <th>Id</th> #}
                 <th>Titre</th>
                 <th>Auteur</th>
-                <th>ISBN</th>
-                <th>Stock</th>
+                {% if app.user %}
+                    <th>ISBN</th>
+                    <th>Stock</th>
+                {% endif %}
                 <th>Résumé</th>
-                <th>Actions</th>
+                {% if app.user %}
+                    <th>Action</th>
+                {% endif %}
             </tr>
         </thead>
         <tbody>
@@ -27,22 +31,23 @@
                 {# <td>{{ book.id }}</td> #}
                 <td>{{ book.title }}</td>
                 <td>{{ book.author }}</td>
-                <td >{{ book.isbn }}</td>
-                {% if book.stock == 0 %}
-                    <td><span class="badge bg-danger" role="badge">Indisponible</span></td>
-                {% else %}
-                    <td class="text-success">{{ book.stock }}</td>
+                {% if app.user %}
+                    <td >{{ book.isbn }}</td>
+                    {% if book.stock == 0 %}
+                        <td><span class="badge bg-danger" role="badge">Indisponible</span></td>
+                    {% else %}
+                        <td class="text-success">{{ book.stock }}</td>
+                    {% endif %}
                 {% endif %}
-                <td>{{ book.shortdescription |slice(0,60) }} ...</td>
-                {% if book.stock == 0 %}
-                    <td> <span class="btn btn-secondary">Emprunter</span></td>
-                {% else %}
-                <td>
-                    <a href="{{ path('app_emprunt_new', {'id': book.id}) }}" class="btn btn-info">Emprunter</a>                    
-                    {# <a href="{{ path('app_book_edit', {'id': book.id}) }}" class="btn btn-secondary">Modifier</a>
-                    <a href="{{ path('app_book_delete', {'id': book.id}) }}" class="btn btn-danger">Supprimer</a> #}
-                </td>
+                    <td>{{ book.shortdescription |slice(0,60) }} ...</td>
+                {% if app.user %}
+                        {% if book.stock == 0 %}
+                            <td> <span class="btn btn-secondary">Emprunter</span></td>
+                        {% else %}
+                            <td> <a href="{{ path('app_emprunt_new', {'id': book.id}) }}" class="btn btn-info">Emprunter</a></td>
+                        {% endif %}
                 {% endif %}
+
             </tr>
         {% else %}
             <tr>

@@ -14,11 +14,17 @@ class Emprunt
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
+    #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $dateEmprunt = null;
 
-    #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
+    #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $dateRetour = null;
+
+    // #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
+    // private ?\DateTimeImmutable $dateEmprunt = null;
+
+    // #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
+    // private ?\DateTimeImmutable $dateRetour = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $statut = null;
