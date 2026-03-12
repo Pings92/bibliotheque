@@ -1,0 +1,98 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Emprunt{% endblock %}
+
+{% block body %}
+    <div class='container'>
+    <h1>Historique de tous les emprunts</h1>
+{# C'est la page qui montre tous les emprunts effectuer sur le site showall html twig
+on doit afficher le nom du client  #}
+
+<fieldset>
+<form method="GET" action="">
+    <fieldset>
+        <legend>Filtrer les emprunts :</legend>
+
+        <div>
+            {# name="filter" doit être identique partout. onchange soumet le formulaire automatiquement #}
+            <input type="radio" id="all" name="filter" value="all" 
+                   {% if app.request.query.get('filter') == 'all' or not app.request.query.get('filter') %}checked{% endif %} 
+                   onchange="this.form.submit()" />
+            <label for="all">Tout</label>
+        </div>
+
+        <div>
+            <input type="radio" id="returned" name="filter" value="restitue" 
+                   {% if app.request.query.get('filter') == 'restitue' %}checked{% endif %} 
+                   onchange="this.form.submit()" />
+            <label for="returned">Restitué</label>
+        </div>
+
+        <div>
+            <input type="radio" id="notYetReturned" name="filter" value="en_cours" 
+                   {% if app.request.query.get('filter') == 'en_cours' %}checked{% endif %} 
+                   onchange="this.form.submit()" />
+            <label for="notYetReturned">En cours</label>
+        </div>
+    </fieldset>
+</form></fieldset>
+<p>Mettre un form pour choisir la liste à afficher en cours, restitué et un compteur avec le nbr d'emprunt en cours </p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Client</th>
+            <th>Livre</th>
+            <th>Date d'emprunt</th>
+            <th>Date de retour</th>
+            <th>Statut</th>
+        </tr>
+    </thead>
+    <tbody>
+{% set filter = app.request.query.get('filter', 'all') %}
+        {% set countEnCours = 0 %}
+
+        {% for emprunt in tousLesEmprunts %}
+            {# On définit si on doit afficher cette ligne #}
+            {% set display = false %}
+            {% if filter == 'all' %}
+                {% set display = true %}
+            {% elseif filter == 'restitue' and emprunt.statut == "Restitué" %}
+                {% set display = true %}
+            {% elseif filter == 'en_cours' and emprunt.statut == "en cours" %}
+                {% set display = true %}
+            {% endif %}
+
+            {# On compte les emprunts en cours pour le compteur plus bas #}
+            {% if emprunt.statut == "en cours" %}
+                {% set countEnCours = countEnCours + 1 %}
+            {% endif %}
+
+            {% if display %}
+                <tr>
+                    <td>{{ emprunt.user.name }}</td>
+                    <td>{{ emprunt.book.title }}</td>
+                    <td>{{ emprunt.dateEmprunt|date('Y-m-d') }}</td>
+                    <td>
+                        {{ emprunt.dateRetour ? emprunt.dateRetour|date('Y-m-d') : 'Emprunt en cours' }}
+                    </td>
+                    <td>
+                        <span class="badge {{ emprunt.statut == 'en cours' ? 'bg-warning' : 'bg-success' }}">
+                            {{ emprunt.statut }}
+                        </span>
+                    </td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+    </tbody>
+</table>
+
+<div class="alert alert-info">
+    Nombre d'emprunts en cours : <strong>{{ countEnCours }}</strong>
+</div>    
+</div>
+    {# <a href="{{ path('app_emprunt_index') }}">back to list</a> #}
+
+    {# <a href="{{ path('app_emprunt_edit', {'id': emprunt.id}) }}">edit</a> #}
+
+    {# {{ include('emprunt/_delete_form.html.twig') }} #}
+{% endblock %}

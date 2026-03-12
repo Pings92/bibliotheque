@@ -7,6 +7,26 @@
     <h1>Historique de tous les emprunts</h1>
 {# C'est la page qui montre tous les emprunts effectuer sur le site showall html twig
 on doit afficher le nom du client  #}
+
+<fieldset>
+  <legend>Afficher:&nbsp;:</legend>
+
+  <div>
+    <input type="radio" id="huey" name="bookStatut" value="huey" checked />
+    <label for="huey">Tout</label>
+  </div>
+
+  <div>
+    <input type="radio" id="dewey" name="bookStatut" value="dewey" />
+    <label for="dewey">Restituté</label>
+  </div>
+
+  <div>
+    <input type="radio" id="louie" name="bookStatut" value="louie" />
+    <label for="louie">En cours</label>
+  </div>
+</fieldset>
+<p>Mettre un form pour choisir la liste à afficher en cours, restitué et un compteur avec le nbr d'emprunt en cours </p>
     <table class="table">
         <tbody>
         <tr>
@@ -17,6 +37,7 @@ on doit afficher le nom du client  #}
             <th>Statut</th>
         </tr>
             {% for emprunt in tousLesEmprunts %}
+            
             <tr>
                 <td>{{ emprunt.user.name}}</td>
                 <td>{{ emprunt.book.title}}</td>
